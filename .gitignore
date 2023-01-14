@@ -13,3 +13,5 @@ buildNumber.properties
 .idea
 *.class
 target
+*.iml
+settings

@@ -1,10 +1,13 @@
 package com.mingshashan.mybatis.learn.entity;
 
+import lombok.Data;
+
 import java.math.BigDecimal;
 
 /**
  * product entity
  */
+@Data
 public class ProductEntity extends BaseEntity {
 
     /**

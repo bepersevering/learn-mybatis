@@ -1,10 +1,13 @@
 package com.mingshashan.mybatis.learn.domain;
 
+import lombok.Data;
+
 import java.util.List;
 
 /**
  * 客户
  */
+@Data
 public class Customer {
 
     /**

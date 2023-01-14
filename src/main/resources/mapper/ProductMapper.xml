@@ -3,5 +3,35 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mingshashan.mybatis.learn.dao.mapper.ProductMapper">
+    <resultMap id="ProductMap" type="com.mingshashan.mybatis.learn.entity.ProductEntity">
+        <id property="id" column="id"></id>
+        <result property="name" column="name"></result>
+        <result property="price" column="price"></result>
+        <result property="description" column="description"></result>
+        <result property="gmtCreate" column="gmt_create"></result>
+        <result property="gmtModified" column="gmt_modified"></result>
+    </resultMap>
 
+    <insert id="saveProduct" parameterType="ProductEntity">
+        INSERT T_ARG_PRODUCT (ID, NAME, PRICE, DESCRIPTION, gmt_create, gmt_modified)
+        values (#{id}, #{name}, #{price}, #{description}, #{gmtCreate}, #{gmtModified})
+    </insert>
+
+    <update id="updateProduct" parameterType="ProductEntity">
+        INSERT T_ARG_PRODUCT SET
+        NAME = #{name},
+        PRICE = #{price},
+        DESCRIPTION = #{description},
+        gmt_modified = #{gmtModified}
+        <where>
+            ID = #{id}
+        </where>
+    </update>
+
+    <delete id="deleteProductById">
+        INSERT T_ARG_PRODUCT SET IS_VALID = '1'
+        <where>
+            ID = #{id}
+        </where>
+    </delete>
 </mapper>

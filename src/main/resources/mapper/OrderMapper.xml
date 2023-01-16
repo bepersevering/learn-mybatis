@@ -14,7 +14,7 @@
     <sql id="order_column">
         id, customer_id, gmt_created, gmt_modified
     </sql>
-    <insert id="insertOrderEntity">
+    <insert id="saveOrder">
         insert into t_arg_order (
         <include refid="order_column"/>
         )

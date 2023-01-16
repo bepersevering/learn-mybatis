@@ -12,7 +12,7 @@ public interface OrderMapper {
      * @param orderEntity
      * @return
      */
-    Integer insertOrderEntity(OrderEntity orderEntity);
+    Integer saveOrder(OrderEntity orderEntity);
 
     /**
      * get by id

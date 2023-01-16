@@ -39,7 +39,7 @@ public interface OrderItemMapper {
      * @param orderId
      * @return
      */
-    OrderItemEntity getByOrderId(String orderId);
+    List<OrderItemEntity> getByOrderId(String orderId);
 
     /**
      * delete by order id

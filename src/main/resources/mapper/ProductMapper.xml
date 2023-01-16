@@ -12,8 +12,14 @@
         <result property="gmtModified" column="gmt_modified"></result>
     </resultMap>
 
+    <sql id="product_column">
+        ID, NAME, PRICE, DESCRIPTION, gmt_created, gmt_modified
+    </sql>
+
     <insert id="saveProduct" parameterType="ProductEntity">
-        INSERT T_ARG_PRODUCT (ID, NAME, PRICE, DESCRIPTION, gmt_created, gmt_modified)
+        INSERT T_ARG_PRODUCT (
+        <include refid="product_column"></include>
+        )
         values (#{id}, #{name}, #{price}, #{description}, #{gmtCreated}, #{gmtModified})
     </insert>
 
@@ -28,10 +34,20 @@
         </where>
     </update>
 
-    <delete id="deleteProductById">
-        INSERT T_ARG_PRODUCT SET IS_VALID = '1'
+    <update id="deleteProductById">
+        UPDATE T_ARG_PRODUCT SET IS_VALID = '0'
         <where>
             ID = #{id}
         </where>
-    </delete>
+    </update>
+
+    <select id="findById" resultMap="ProductMap">
+        SELECT
+        <include refid="product_column"></include>
+        FROM T_ARG_PRODUCT
+        <where>
+            ID = #{id}
+            AND IS_VALID = '1'
+        </where>
+    </select>
 </mapper>

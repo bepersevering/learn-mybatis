@@ -3,5 +3,51 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mingshashan.mybatis.learn.dao.mapper.OrderItemMapper">
+    <resultMap id="OrderItemMap" type="com.mingshashan.mybatis.learn.entity.OrderItemEntity">
+        <id property="id" column="id"/>
+        <result property="orderId" column="order_id"/>
+        <result property="productId" column="product_id"/>
+        <result property="amount" column="amount"/>
+        <result property="price" column="price"/>
+        <result property="gmtCreated" column="gmt_created"/>
+        <result property="gmtModified" column="gmt_modified"/>
+    </resultMap>
+
+    <sql id="order_item_column">
+        id, order_Id, product_Id, amount, price, gmt_created, gmt_modified
+    </sql>
+
+    <insert id="saveOrderItem">
+        insert into t_arg_order_item (<include refid="order_item_column"></include>)
+        values(#{id}, #{orderId}, #{productId}, #{amount}, #{price},
+        #{gmtCreated}, #{gmtModified})
+    </insert>
+
+    <insert id="batchSaveOrderItemList">
+        insert into t_arg_order_item (<include refid="order_item_column"></include>)
+        VALUES
+        <foreach collection="orderItemEntityList" separator="," item="item">
+            values(#{item.id}, #{item.orderId}, #{item.productId}, #{item.amount}, #{item.price},
+            #{item.gmtCreated}, #{item.gmtModified})
+        </foreach>
+    </insert>
+
+    <update id="deleteByOrderId">
+        update t_arg_order_item set is_valid = '0'
+        where order_id = #{orderId}
+    </update>
+
+    <select id="getById" resultType="OrderItemEntity">
+        select
+        <include refid="order_item_column"></include>
+        where id = #{id}
+    </select>
+
+    <select id="getByOrderId" resultType="OrderItemEntity">
+        select
+        <include refid="order_item_column"></include>
+        where order_id = #{orderId}
+    </select>
+
 
 </mapper>

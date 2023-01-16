@@ -1,8 +1,5 @@
 package com.mingshashan.mybatis.learn.util;
 
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * @author mingshashan
  */
@@ -14,11 +11,11 @@ public class IdGenerator {
 
     private long processId;
 
-    private int processIdBits = 10;
+    private final int processIdBits = 10;
 
     private long sequence = 0L;
 
-    private int sequenceBits = 12;
+    private final int sequenceBits = 12;
 
     public IdGenerator() {
 

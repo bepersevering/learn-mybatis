@@ -41,11 +41,19 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
     @Override
     public void deleteCustomerById(String id) {
-
+        MapperUtil.getMapperInstance(customerClazz)
+                .deleteCustomerById(id);
     }
 
     @Override
     public Customer findById(String id) {
-        return null;
+        CustomerEntity customerEntity = MapperUtil.getMapperInstance(customerClazz)
+                .findById(id);
+        try {
+            return CustomerConverter.entity2Customer(customerEntity);
+        } catch (JsonProcessingException e) {
+            throw new BusinessException(e.getMessage(),
+                    e.getCause());
+        }
     }
 }

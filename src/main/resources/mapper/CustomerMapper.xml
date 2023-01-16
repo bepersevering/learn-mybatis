@@ -15,20 +15,42 @@
         <result property="isValid" column="is_valid"></result>
     </resultMap>
 
+    <sql id="customer_column">
+        id, name, gender, phone, address_info, gmt_created, gmt_modified
+    </sql>
+
     <insert id="saveCustomer" parameterType="CustomerEntity">
-        INSERT INTO T_ARG_CUSTOMER(id, name, gender, phone, address_info, gmt_created, gmt_modified)
+        INSERT INTO T_ARG_CUSTOMER(
+        <include refid="customer_column"></include>
+        )
         values(#{id}, #{name}, #{gender}, #{phone}, #{addressInfo}, #{gmtCreated}, #{gmtModified})
     </insert>
 
     <update id="updateCustomer" parameterType="CustomerEntity">
-        update t_arg_customer set
+        update T_ARG_CUSTOMER set
         name = #{name},
         gender = #{gender},
         phone = #{phone},
         address_info = #{addressInfo},
         gmt_modified = #{gmtModified}
+        from t_arg_customer
         <where>
             ID = #{id}
         </where>
     </update>
+    <update id="deleteCustomerById">
+        update T_ARG_CUSTOMER set is_valid = '0'
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <select id="findById" resultType="CustomerEntity">
+        select
+        <include refid="customer_column"></include>
+        from T_ARG_CUSTOMER
+        <where>
+            id = #{id}
+        </where>
+    </select>
 </mapper>

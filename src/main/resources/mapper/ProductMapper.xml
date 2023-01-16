@@ -10,6 +10,7 @@
         <result property="description" column="description"></result>
         <result property="gmtCreated" column="gmt_created"></result>
         <result property="gmtModified" column="gmt_modified"></result>
+
     </resultMap>
 
     <sql id="product_column">

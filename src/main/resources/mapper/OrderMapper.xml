@@ -3,5 +3,41 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mingshashan.mybatis.learn.dao.mapper.OrderMapper">
+    <resultMap id="OrderMap" type="com.mingshashan.mybatis.learn.entity.OrderEntity">
+        <id property="id" column="id"/>
+        <result property="customerId" column="customer_id"></result>
+        <result property="gmtCreated" column="gmt_created"/>
+        <result property="gmtModified" column="gmt_modified"/>
+
+    </resultMap>
+
+    <sql id="order_column">
+        id, customer_id, gmt_created, gmt_modified
+    </sql>
+    <insert id="insertOrderEntity">
+        insert into t_arg_order (
+        <include refid="order_column"/>
+        )
+        values(#{id}, #{customerId}, #{gmtCreated}, #{gmtModified})
+    </insert>
+
+    <update id="deleteById">
+        update t_arg_order
+        set is_valid = '0'
+        where id = #{id}
+    </update>
+
+    <select id="getById" resultType="OrderEntity">
+        select
+        <include refid="order_column"></include>
+        where id = #{id}
+    </select>
+
+    <select id="getByCustomerId" resultType="OrderEntity">
+        select
+        <include refid="order_column"></include>
+        where customer_id = #{customerId}
+    </select>
+
 
 </mapper>

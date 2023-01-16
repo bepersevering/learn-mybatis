@@ -2,6 +2,8 @@ package com.mingshashan.mybatis.learn.entity;
 
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * 订单entity
  */
@@ -12,4 +14,6 @@ public class OrderEntity extends BaseEntity {
      * 客户id
      */
     private String customerId;
+
+    private List<OrderItemEntity> orderItemEntityList;
 }

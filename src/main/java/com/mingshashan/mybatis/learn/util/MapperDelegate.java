@@ -19,12 +19,12 @@ public class MapperDelegate<T> {
                 .getMapper(mapperClass, sqlSessionFactory.openSession(true));
     }
 
-    public void setMapperClass(Class mapperClass) {
-        this.mapperClass = mapperClass;
-    }
-
     public Class getMapperClass() {
         return mapperClass;
+    }
+
+    public void setMapperClass(Class mapperClass) {
+        this.mapperClass = mapperClass;
     }
 
     public Configuration getConfiguration() {

@@ -5,7 +5,10 @@ import com.mingshashan.mybatis.learn.domain.Address;
 import com.mingshashan.mybatis.learn.domain.Customer;
 import com.mingshashan.mybatis.learn.util.IdGenerator;
 import com.mingshashan.mybatis.learn.util.MybatisConfigUtil;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -59,9 +62,32 @@ public class CustomerRepositoryTest {
         customerRepository.saveCustomer(customer);
     }
 
+    @Test
     public void saveCustomer_Exception_Test() {
+        Customer customer = new Customer();
+        // customer.setId(new IdGenerator().nextStringId());
+        customer.setName("艾AA");
+        customer.setGender(0);
+        customer.setPhone("132359133882");
 
+        Assert.assertThrows(PersistenceException.class,
+                () -> customerRepository.saveCustomer(customer));
+    }
 
+    @Test
+    public void findById_Test() {
+        Customer customer = new Customer();
+        customer.setId(new IdGenerator().nextStringId());
+        customer.setName("艾AA");
+        customer.setGender(0);
+        customer.setPhone("132359133882");
+
+        customerRepository.saveCustomer(customer);
+
+        Customer saved = customerRepository.findById(customer.getId());
+        Assert.assertTrue(StringUtils.equals(customer.getId(), saved.getId()));
+        Assert.assertTrue(StringUtils.equals(customer.getName(), saved.getName()));
+        Assert.assertTrue(StringUtils.equals(customer.getPhone(), saved.getPhone()));
     }
 
 }

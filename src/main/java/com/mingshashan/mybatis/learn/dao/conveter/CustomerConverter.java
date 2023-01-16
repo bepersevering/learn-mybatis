@@ -5,6 +5,7 @@ import com.mingshashan.mybatis.learn.domain.Address;
 import com.mingshashan.mybatis.learn.domain.Customer;
 import com.mingshashan.mybatis.learn.entity.CustomerEntity;
 import com.mingshashan.mybatis.learn.util.JSONUtil;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,9 @@ public class CustomerConverter {
         customerEntity.setName(customer.getName());
         customerEntity.setGender(customer.getGender());
         customerEntity.setPhone(customer.getPhone());
+        if (null == customer.getAddressList()) {
+            customer.setAddressList(new ArrayList<>());
+        }
         customerEntity.setAddressInfo(JSONUtil.toJSONString(customer.getAddressList()));
         return customerEntity;
     }
@@ -39,9 +43,11 @@ public class CustomerConverter {
         customer.setGender(customerEntity.getGender());
         customer.setPhone(customerEntity.getPhone());
 
-        List<Address> addressList = new ArrayList<>();
-        customer.setAddressList(JSONUtil.parseObject(customerEntity.getAddressInfo(),
-                addressList.getClass()));
+        if (StringUtils.isNotBlank(customerEntity.getAddressInfo())) {
+            List<Address> addressList = new ArrayList<>();
+            customer.setAddressList(JSONUtil.parseObject(customerEntity.getAddressInfo(),
+                    addressList.getClass()));
+        }
         return customer;
     }
 }

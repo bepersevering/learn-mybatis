@@ -21,6 +21,7 @@
         <guava.version>31.1-jre</guava.version>
         <junit.version>4.13.1</junit.version>
         <commons-lang3.version>3.10</commons-lang3.version>
+        <commons-collections4.version>4.4</commons-collections4.version>
         <mysql.driver.version>8.0.25</mysql.driver.version>
     </properties>
 
@@ -61,6 +62,11 @@
             <version>${commons-lang3.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>${commons-collections4.version}</version>
+        </dependency>
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>

@@ -29,4 +29,14 @@ public class Product {
      * 价格
      */
     private BigDecimal price;
+
+    /**
+     * 商品类型
+     */
+    private String categoryCode;
+
+    /**
+     * 商品类型
+     */
+    private String smallCategoryCode;
 }

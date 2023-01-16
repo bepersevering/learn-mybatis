@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class MapperUtil {
 
-    private static Map<Class, MapperDelegate> mapperHolder = new ConcurrentHashMap<>();
+    private static final Map<Class, MapperDelegate> mapperHolder = new ConcurrentHashMap<>();
 
     public static <T> T getMapperInstance(Class<T> clazz) {
 

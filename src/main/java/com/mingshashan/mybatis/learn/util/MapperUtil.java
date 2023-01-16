@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class MapperUtil {
 
-    private static Map<String, MapperDelegate> mapperHolder = new ConcurrentHashMap<>();
+    private static Map<Class, MapperDelegate> mapperHolder = new ConcurrentHashMap<>();
 
     public static <T> T getMapperInstance(Class<T> clazz) {
 
@@ -18,18 +18,16 @@ public class MapperUtil {
             throw new DaoException("clazz is empty");
         }
 
-        String className = clazz.getName();
-
-        if (!mapperHolder.containsKey(className)) {
-            throw new DaoException("no mapper " + className);
+        if (!mapperHolder.containsKey(clazz)) {
+            throw new DaoException("no mapper " + clazz);
         }
 
-        MapperDelegate mapperDelegate = mapperHolder.get(className);
+        MapperDelegate mapperDelegate = mapperHolder.get(clazz);
 
         return (T) mapperDelegate.getMapper();
     }
 
-    public void addMapper(String key, MapperDelegate mapperDelegate) {
-        mapperHolder.put(key, mapperDelegate);
+    public static void addMapper(Class clazz, MapperDelegate mapperDelegate) {
+        mapperHolder.put(clazz, mapperDelegate);
     }
 }

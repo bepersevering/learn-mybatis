@@ -27,6 +27,9 @@ public class Customer {
 
     /**
      * 性别
+     * 1	男性
+     * 2	女性
+     * 0	未知
      */
     private int gender;
 

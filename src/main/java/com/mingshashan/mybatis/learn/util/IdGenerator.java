@@ -1,44 +1,85 @@
 package com.mingshashan.mybatis.learn.util;
 
-import java.util.Random;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author mingshashan
  */
 public class IdGenerator {
 
-    private static final String YOUTUBE_LIKE_ID_DIC = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private final static long beginTs = 1483200000000L;
 
-    private static final int MIN_LENGTH = 16;
-    private static final int MAX_LENGTH = 32;
+    private long lastTs = 0L;
 
-    public static String generateId() {
+    private long processId;
 
-        String input = System.currentTimeMillis() + "剑外忽传收蓟北， 初闻涕泪满衣裳。\n" +
-                "却看妻子愁何在，漫卷诗书喜欲狂。\n" +
-                "白日放歌须纵酒，青春作伴好还乡。\n" +
-                "即从巴峡穿巫峡，便下襄阳向洛阳。";
-        return genHash(input, MIN_LENGTH, MAX_LENGTH, YOUTUBE_LIKE_ID_DIC);
+    private int processIdBits = 10;
+
+    private long sequence = 0L;
+
+    private int sequenceBits = 12;
+
+    public IdGenerator() {
+
     }
 
-    public static String generate(String input) {
-        return genHash(input, MIN_LENGTH, MAX_LENGTH, YOUTUBE_LIKE_ID_DIC);
-    }
-
-    /**
-     * Generate string unique hash based on provided dictionary
-     */
-    private static String genHash(String str, int minLength, int maxLength, String dictionary) {
-        StringBuilder stringBuilder = new StringBuilder();
-        Random random = new Random(str.hashCode());
-        int length = minLength + random.nextInt(maxLength - minLength);
-        for (int i = 0; i < length; i++) {
-
-            int id = random.nextInt(dictionary.length());
-            stringBuilder.append(dictionary.charAt(id));
-
-
+    public IdGenerator(long processId) {
+        if (processId > ((1 << processIdBits) - 1)) {
+            throw new RuntimeException("进程ID超出范围，设置位数" + processIdBits + "，最大" + ((1 << processIdBits) - 1));
         }
-        return stringBuilder.toString();
+        this.processId = processId;
     }
+
+    protected long timeGen() {
+        return System.currentTimeMillis();
+    }
+
+    public String nextStringId() {
+        return String.valueOf(nextId());
+    }
+
+    public synchronized long nextId() {
+        long ts = timeGen();
+        // 刚刚生成的时间戳比上次的时间戳还小，出错
+        if (ts < lastTs) {
+            throw new RuntimeException("时间戳顺序错误");
+        }
+        // 刚刚生成的时间戳跟上次的时间戳一样，则需要生成一个sequence序列号
+        if (ts == lastTs) {
+            // sequence循环自增
+            sequence = (sequence + 1) & ((1 << sequenceBits) - 1);
+            // 如果sequence=0则需要重新生成时间戳
+            if (sequence == 0) {
+                // 且必须保证时间戳序列往后
+                ts = nextTs(lastTs);
+            }
+
+            // 如果ts>lastTs，时间戳序列已经不同了，此时可以不必生成sequence了，直接取0
+        } else {
+            sequence = 0L;
+        }
+
+        // 更新lastTs时间戳
+        lastTs = ts;
+        return ((ts - beginTs) << (processIdBits + sequenceBits)) | (processId << sequenceBits) | sequence;
+    }
+
+    public Long nextShortId() {
+
+        Long shortId = System.currentTimeMillis() / 100 % 1000000000;
+        if (shortId < 100000000) {
+            shortId += 100000000;
+        }
+        return shortId;
+    }
+
+    protected long nextTs(long lastTs) {
+        long ts = timeGen();
+        while (ts <= lastTs) {
+            ts = timeGen();
+        }
+        return ts;
+    }
+
 }

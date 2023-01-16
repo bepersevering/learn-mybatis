@@ -9,10 +9,11 @@ public class IdGeneratorTest {
 
     @Test
     public void test_print() {
-        String id1 = IdGenerator.generateId();
-        String id2 = IdGenerator.generateId();
-        String id3 = IdGenerator.generateId();
-        String id4 = IdGenerator.generateId();
+        IdGenerator idGenerator = new IdGenerator();
+        String id1 = idGenerator.nextStringId();
+        String id2 = idGenerator.nextStringId();
+        String id3 = idGenerator.nextStringId();
+        String id4 = idGenerator.nextStringId();
         System.out.println(id1);
         System.out.println(id2);
         System.out.println(id3);

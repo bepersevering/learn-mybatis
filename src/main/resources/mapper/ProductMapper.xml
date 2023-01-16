@@ -8,13 +8,13 @@
         <result property="name" column="name"></result>
         <result property="price" column="price"></result>
         <result property="description" column="description"></result>
-        <result property="gmtCreate" column="gmt_create"></result>
+        <result property="gmtCreated" column="gmt_created"></result>
         <result property="gmtModified" column="gmt_modified"></result>
     </resultMap>
 
     <insert id="saveProduct" parameterType="ProductEntity">
-        INSERT T_ARG_PRODUCT (ID, NAME, PRICE, DESCRIPTION, gmt_create, gmt_modified)
-        values (#{id}, #{name}, #{price}, #{description}, #{gmtCreate}, #{gmtModified})
+        INSERT T_ARG_PRODUCT (ID, NAME, PRICE, DESCRIPTION, gmt_created, gmt_modified)
+        values (#{id}, #{name}, #{price}, #{description}, #{gmtCreated}, #{gmtModified})
     </insert>
 
     <update id="updateProduct" parameterType="ProductEntity">

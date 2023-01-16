@@ -54,7 +54,13 @@ public class MybatisConfigUtil {
 //                    .getMapperRegistry().getMapper(clazz, sqlSession);
 //        }
         for (Class<?> clazz : mapperClassCollection) {
+            MapperDelegate mapperDelegate = new MapperDelegate();
+            mapperDelegate.setConfiguration(MybatisConfigUtil.getSqlSessionFactory()
+                    .getConfiguration());
+            mapperDelegate.setSqlSessionFactory(sqlSessionFactory);
+            mapperDelegate.setMapperClass(clazz);
 
+            MapperUtil.addMapper(clazz, mapperDelegate);
         }
     }
 }

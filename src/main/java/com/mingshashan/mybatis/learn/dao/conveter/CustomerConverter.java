@@ -24,7 +24,7 @@ public class CustomerConverter {
         customerEntity.setName(customer.getName());
         customerEntity.setGender(customer.getGender());
         customerEntity.setPhone(customer.getPhone());
-        customerEntity.setAddressList(JSONUtil.toJSONString(customer.getAddressList()));
+        customerEntity.setAddressInfo(JSONUtil.toJSONString(customer.getAddressList()));
         return customerEntity;
     }
 
@@ -40,7 +40,7 @@ public class CustomerConverter {
         customer.setPhone(customerEntity.getPhone());
 
         List<Address> addressList = new ArrayList<>();
-        customer.setAddressList(JSONUtil.parseObject(customerEntity.getAddressList(),
+        customer.setAddressList(JSONUtil.parseObject(customerEntity.getAddressInfo(),
                 addressList.getClass()));
         return customer;
     }

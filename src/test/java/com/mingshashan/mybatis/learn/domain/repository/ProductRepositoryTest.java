@@ -33,7 +33,7 @@ public class ProductRepositoryTest {
     @Test
     public void saveProduct_Common_Test() {
         Product product = new Product();
-        product.setId(IdGenerator.generateId());
+        product.setId(new IdGenerator().nextStringId());
         product.setName("红米K40Pro");
         product.setDescription("红米K40 Pro 8+128");
         product.setPrice(new BigDecimal(1999.0));

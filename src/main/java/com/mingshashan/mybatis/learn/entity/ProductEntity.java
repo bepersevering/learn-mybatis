@@ -11,11 +11,6 @@ import java.math.BigDecimal;
 public class ProductEntity extends BaseEntity {
 
     /**
-     * id
-     */
-    private String id;
-
-    /**
      * 产品名
      */
     private String name;

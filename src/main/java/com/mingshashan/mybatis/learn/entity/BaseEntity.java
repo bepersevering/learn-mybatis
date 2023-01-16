@@ -18,7 +18,7 @@ public class BaseEntity {
     /**
      * 创建时间
      */
-    protected LocalDateTime gmtCreate;
+    protected LocalDateTime gmtCreated;
 
     /**
      * 修改时间

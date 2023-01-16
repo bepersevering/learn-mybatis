@@ -4,4 +4,31 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mingshashan.mybatis.learn.dao.mapper.CustomerMapper">
 
+    <resultMap id="CustomerMap" type="com.mingshashan.mybatis.learn.entity.CustomerEntity">
+        <id property="id" column="id"></id>
+        <result property="name" column="name"></result>
+        <result property="gender" column="gender"></result>
+        <result property="phone" column="phone"></result>
+        <result property="addressInfo" column="address_info"></result>
+        <result property="gmtCreated" column="gmt_created"></result>
+        <result property="gmtModified" column="gmt_modified"></result>
+        <result property="isValid" column="is_valid"></result>
+    </resultMap>
+
+    <insert id="saveCustomer" parameterType="CustomerEntity">
+        INSERT INTO T_ARG_CUSTOMER(id, name, gender, phone, address_info, gmt_created, gmt_modified)
+        values(#{id}, #{name}, #{gender}, #{phone}, #{addressInfo}, #{gmtCreated}, #{gmtModified})
+    </insert>
+
+    <update id="updateCustomer" parameterType="CustomerEntity">
+        update t_arg_customer set
+        name = #{name},
+        gender = #{gender},
+        phone = #{phone},
+        address_info = #{addressInfo},
+        gmt_modified = #{gmtModified}
+        <where>
+            ID = #{id}
+        </where>
+    </update>
 </mapper>

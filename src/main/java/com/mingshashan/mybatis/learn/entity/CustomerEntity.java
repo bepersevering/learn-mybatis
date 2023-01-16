@@ -26,5 +26,5 @@ public class CustomerEntity extends BaseEntity {
     /**
      * 收货地址(json格式存)-值对象
      */
-    private String addressList;
+    private String addressInfo;
 }

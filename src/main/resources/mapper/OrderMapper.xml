@@ -3,12 +3,48 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mingshashan.mybatis.learn.dao.mapper.OrderMapper">
-    <resultMap id="OrderMap" type="com.mingshashan.mybatis.learn.entity.OrderEntity">
+
+    <cache-ref namespace="com.mingshashan.mybatis.learn.dao.mapper.CustomerMapper"/>
+
+    <resultMap id="OrderMap" type="OrderEntity">
         <id property="id" column="id"/>
         <result property="customerId" column="customer_id"></result>
         <result property="gmtCreated" column="gmt_created"/>
         <result property="gmtModified" column="gmt_modified"/>
+    </resultMap>
 
+    <!-- 非常复杂的结果映射 -->
+    <resultMap id="OrderWithOrderItemMap" type="OrderEntity">
+        <id property="id" column="id"/>
+        <result property="customerId" column="customer_id"></result>
+        <result property="gmtCreated" column="gmt_created"/>
+        <result property="gmtModified" column="gmt_modified"/>
+        <association property="orderItemEntityList" javaType="OrderItemEntity">
+            <id property="id" column="id"/>
+            <result property="orderId" column="order_id"/>
+            <result property="productId" column="product_id"/>
+            <result property="amount" column="amount"/>
+            <result property="price" column="price"/>
+            <result property="gmtCreated" column="gmt_created"/>
+            <result property="gmtModified" column="gmt_modified"/>
+        </association>
+        <collection property="customerEntity" ofType="CustomerEntity">
+            <id property="id" column="id"></id>
+            <result property="name" column="name"></result>
+            <result property="gender" column="gender"></result>
+            <result property="phone" column="phone"></result>
+            <result property="addressList" column="address_info"
+                    typeHandler="com.mingshashan.mybatis.learn.mybatis.handler.AddressInfoHandler"
+                    javaType="java.util.List"
+                    jdbcType="VARCHAR"
+            ></result>
+            <result property="gmtCreated" column="gmt_created"></result>
+            <result property="gmtModified" column="gmt_modified"></result>
+            <result property="isValid" column="is_valid"></result>
+            <discriminator javaType="int" column="draft">
+                <case value="1" resultType="DraftPost"/>
+            </discriminator>
+        </collection>
     </resultMap>
 
     <sql id="order_column">

@@ -13,6 +13,8 @@
 
     </resultMap>
 
+    <cache-ref namespace="com.mingshashan.mybatis.learn.dao.mapper.CustomerMapper"/>
+
     <sql id="product_column">
         ID, NAME, PRICE, DESCRIPTION, gmt_created, gmt_modified
     </sql>

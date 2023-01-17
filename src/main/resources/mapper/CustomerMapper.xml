@@ -4,6 +4,15 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mingshashan.mybatis.learn.dao.mapper.CustomerMapper">
 
+    <cache type="com.mingshashan.mybatis.learn.mybatis.LRUCache"
+           eviction="LRU"
+           blocking="true"
+           flushInterval="60000"
+           readOnly="true"
+           size="256">
+    </cache>
+
+
     <resultMap id="CustomerMap" type="com.mingshashan.mybatis.learn.entity.CustomerEntity">
         <id property="id" column="id"></id>
         <result property="name" column="name"></result>
@@ -17,7 +26,12 @@
         <result property="gmtCreated" column="gmt_created"></result>
         <result property="gmtModified" column="gmt_modified"></result>
         <result property="isValid" column="is_valid"></result>
+        <collection property="tagEntityList" ofType="TagEntity">
+            <id property="id" column="id"/>
+            <result property="name" column="name"/>
+        </collection>
     </resultMap>
+
 
     <sql id="customer_column">
         id, name, gender, phone, address_info, gmt_created, gmt_modified
@@ -57,4 +71,6 @@
             id = #{id}
         </where>
     </select>
+
+
 </mapper>

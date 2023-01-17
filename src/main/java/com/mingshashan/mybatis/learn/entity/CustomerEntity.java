@@ -27,6 +27,11 @@ public class CustomerEntity extends BaseEntity {
     private int gender;
 
     /**
+     * tag list
+     */
+    private List<TagEntity> tagEntityList;
+
+    /**
      * 收货地址(json格式存)-值对象
      */
     private List<Address> addressList;

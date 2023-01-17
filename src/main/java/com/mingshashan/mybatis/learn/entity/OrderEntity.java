@@ -15,5 +15,7 @@ public class OrderEntity extends BaseEntity {
      */
     private String customerId;
 
+    private CustomerEntity customerEntity;
+
     private List<OrderItemEntity> orderItemEntityList;
 }

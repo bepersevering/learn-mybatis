@@ -9,7 +9,11 @@
         <result property="name" column="name"></result>
         <result property="gender" column="gender"></result>
         <result property="phone" column="phone"></result>
-        <result property="addressInfo" column="address_info"></result>
+        <result property="addressList" column="address_info"
+                typeHandler="com.mingshashan.mybatis.learn.mybatis.handler.AddressInfoHandler"
+                javaType="java.util.List"
+                jdbcType="VARCHAR"
+        ></result>
         <result property="gmtCreated" column="gmt_created"></result>
         <result property="gmtModified" column="gmt_modified"></result>
         <result property="isValid" column="is_valid"></result>
@@ -23,7 +27,7 @@
         INSERT INTO T_ARG_CUSTOMER(
         <include refid="customer_column"></include>
         )
-        values(#{id}, #{name}, #{gender}, #{phone}, #{addressInfo}, #{gmtCreated}, #{gmtModified})
+        values(#{id}, #{name}, #{gender}, #{phone}, #{addressList}, #{gmtCreated}, #{gmtModified})
     </insert>
 
     <update id="updateCustomer" parameterType="CustomerEntity">
@@ -31,7 +35,7 @@
         name = #{name},
         gender = #{gender},
         phone = #{phone},
-        address_info = #{addressInfo},
+        address_info = #{addressList},
         gmt_modified = #{gmtModified}
         from t_arg_customer
         <where>

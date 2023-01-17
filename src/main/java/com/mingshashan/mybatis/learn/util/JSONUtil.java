@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import org.apache.commons.lang3.StringUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
@@ -67,6 +68,9 @@ public class JSONUtil {
      * @throws JsonProcessingException
      */
     public static <T> T parseObject(String text, Class<T> clazz) throws JsonProcessingException {
+        if (StringUtils.isBlank(text)) {
+            return null;
+        }
         return objectMapper.readValue(text, clazz);
     }
 

@@ -1,14 +1,9 @@
 package com.mingshashan.mybatis.learn.dao.conveter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.mingshashan.mybatis.learn.domain.Address;
 import com.mingshashan.mybatis.learn.domain.Customer;
 import com.mingshashan.mybatis.learn.entity.CustomerEntity;
-import com.mingshashan.mybatis.learn.util.JSONUtil;
-import org.apache.commons.lang3.StringUtils;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -25,10 +20,7 @@ public class CustomerConverter {
         customerEntity.setName(customer.getName());
         customerEntity.setGender(customer.getGender());
         customerEntity.setPhone(customer.getPhone());
-        if (null == customer.getAddressList()) {
-            customer.setAddressList(new ArrayList<>());
-        }
-        customerEntity.setAddressInfo(JSONUtil.toJSONString(customer.getAddressList()));
+        customerEntity.setAddressList(customer.getAddressList());
         return customerEntity;
     }
 
@@ -42,12 +34,7 @@ public class CustomerConverter {
         customer.setName(customerEntity.getName());
         customer.setGender(customerEntity.getGender());
         customer.setPhone(customerEntity.getPhone());
-
-        if (StringUtils.isNotBlank(customerEntity.getAddressInfo())) {
-            List<Address> addressList = new ArrayList<>();
-            customer.setAddressList(JSONUtil.parseObject(customerEntity.getAddressInfo(),
-                    addressList.getClass()));
-        }
+        customer.setAddressList(customerEntity.getAddressList());
         return customer;
     }
 }

@@ -1,0 +1,107 @@
+@startuml
+
+skinparam backgroundColor #EEEBDC
+skinparam handwritten true
+
+skinparam sequence {
+	ArrowColor DeepSkyBlue
+	ActorBorderColor DeepSkyBlue
+	LifeLineBorderColor blue
+	LifeLineBackgroundColor #A9DCDF
+
+	ParticipantBorderColor DeepSkyBlue
+	ParticipantBackgroundColor DodgerBlue
+	ParticipantFontName Impact
+	ParticipantFontSize 17
+	ParticipantFontColor #A9DCDF
+
+	ActorBackgroundColor aqua
+	ActorFontColor DeepSkyBlue
+	ActorFontSize 17
+	ActorFontName Aapex
+}
+
+autonumber
+
+actor Actor as start
+start -> SqlSessionFactoryBuilder: 调用build解析配置创建SessionFactory
+activate SqlSessionFactoryBuilder
+SqlSessionFactoryBuilder -> XMLConfigBuilder: parse方法执行解析流程
+activate XMLConfigBuilder
+XMLConfigBuilder -> XMLConfigBuilder: parse
+    activate XMLConfigBuilder
+    group 解析configuration配置
+    XMLConfigBuilder -> XMLConfigBuilder: 处理properties
+    note right
+    解析完的properties在
+    Configuration的variables中
+    end note
+    XMLConfigBuilder -> XMLConfigBuilder: 解析settings为一个property对象
+    note right
+    即解析为<K,V>为后续的解析准备
+    end note
+    XMLConfigBuilder -> XMLConfigBuilder: 处理vfs
+    XMLConfigBuilder -> XMLConfigBuilder: 处理logImpl
+    group typeAliases处理
+        XMLConfigBuilder -> XMLConfigBuilder: 处理typeAliases
+        activate XMLConfigBuilder
+            XMLConfigBuilder -> TypeAliasRegistry: registerAlias
+            note right
+            放到TypeAliasRegistry的
+            map容器typeAliases中
+            end note
+        deactivate XMLConfigBuilder
+    end group typeAliases处理
+    group plugins
+    XMLConfigBuilder -> XMLConfigBuilder: 处理plugins
+    note right
+    生成Interceptor对象
+    加入到interceptorChain中
+    end note
+    end group plugins
+    XMLConfigBuilder -> XMLConfigBuilder: 处理objectFactory
+    XMLConfigBuilder -> XMLConfigBuilder: 处理objectWrapperFactory
+    XMLConfigBuilder -> XMLConfigBuilder: 处理reflectorFactory
+    XMLConfigBuilder -> XMLConfigBuilder: 处理其他settings
+    note right
+    处理剩下的settings标签
+    配置下的配置(前面已经处理了vfs与logImpl)
+    end note
+    group environments
+    XMLConfigBuilder -> XMLConfigBuilder: 处理environments
+    note right
+    负责处理
+    TransactionFactory
+    DataSourceFactory
+    DataSource
+    Environment
+    end note
+    end group environments
+    XMLConfigBuilder -> XMLConfigBuilder: 处理databaseIdProvider
+    group typeHandlers
+        XMLConfigBuilder -> XMLConfigBuilder: 处理typeHandlers
+            activate XMLConfigBuilder
+                XMLConfigBuilder -> TypeHandlerRegistry: register
+                note right
+                将对应的typeHandler放到下面的容器中
+                jdbcTypeHandlerMap : jdbc处理器容器
+                typeHandlerMap java : class处理器容器
+                unknownTypeHandler : 未知类型处理器容器
+                allTypeHandlersMap : key为handler的class,value为handler
+                end note
+            deactivate XMLConfigBuilder
+    end group typeHandlers
+    group mappers
+    XMLConfigBuilder -> XMLConfigBuilder: 调用XMLConfigBuilder处理mappers
+        activate XMLConfigBuilder
+            XMLConfigBuilder -> XMLMapperBuilder: parse
+            XMLMapperBuilder -> XMLMapperBuilder: parse
+        deactivate XMLMapperBuilder
+    end group mappers
+    end group 解析configuration配置
+    deactivate XMLConfigBuilder
+deactivate XMLConfigBuilder
+SqlSessionFactoryBuilder -> SqlSessionFactoryBuilder: build构造默认DefaultSqlSessionFactory
+deactivate SqlSessionFactoryBuilder
+SqlSessionFactoryBuilder -> start: 返回DefaultSqlSessionFactory
+@enduml

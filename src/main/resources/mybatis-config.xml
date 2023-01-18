@@ -96,6 +96,7 @@
         <typeAlias alias="OrderItemEntity" type="com.mingshashan.mybatis.learn.entity.OrderItemEntity"/>
         <typeAlias alias="ProductEntity" type="com.mingshashan.mybatis.learn.entity.ProductEntity"/>
         <typeAlias alias="TagEntity" type="com.mingshashan.mybatis.learn.entity.TagEntity"/>
+        <typeAlias alias="CustomCache" type="com.mingshashan.mybatis.learn.mybatis.CustomCache"/>
     </typeAliases>
 
     <typeHandlers>

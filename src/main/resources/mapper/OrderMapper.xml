@@ -41,9 +41,9 @@
             <result property="gmtCreated" column="gmt_created"></result>
             <result property="gmtModified" column="gmt_modified"></result>
             <result property="isValid" column="is_valid"></result>
-            <discriminator javaType="int" column="draft">
-                <case value="1" resultType="DraftPost"/>
-            </discriminator>
+<!--            <discriminator javaType="int" column="draft">-->
+            <!--                <case value="1" resultType="DraftPost"/>-->
+            <!--            </discriminator>-->
         </collection>
     </resultMap>
 

@@ -26,10 +26,50 @@ autonumber
 actor Actor as start
 start -> XMLMapperBuilder: 解析mappers
     activate XMLMapperBuilder
+    group parse
     XMLMapperBuilder -> XMLMapperBuilder: parse
+    group resource处理
+    XMLMapperBuilder -> XMLMapperBuilder: 加载resource
     XMLMapperBuilder -> XMLMapperBuilder: configurationElement
-    XMLMapperBuilder -> XMLMapperBuilder: configurationElement
-
+    activate XMLMapperBuilder
+    XMLMapperBuilder -> XMLMapperBuilder: 设置当前mapper的namespace
+    XMLMapperBuilder -> XMLMapperBuilder: cache-ref标签的处理
+    XMLMapperBuilder -> XMLMapperBuilder: cache标签的处理
+    XMLMapperBuilder -> XMLMapperBuilder: parameterMap标签的处理
+    XMLMapperBuilder -> XMLMapperBuilder: resultMap标签的处理
+    XMLMapperBuilder -> XMLMapperBuilder: sql标签的处理
+    XMLMapperBuilder -> XMLMapperBuilder: buildStatementFromContext: "select|insert|update|delete"这些标签的处理
+    XMLMapperBuilder -> XMLStatementBuilder: parseStatementNode
+        activate XMLStatementBuilder
+            XMLStatementBuilder -> XMLStatementBuilder: 解析处理statement
+            XMLStatementBuilder -> MapperBuilderAssistant: addMappedStatement
+            note right
+                解析所有statement
+                通过MapperBuilderAssistant处理
+            end note
+            MapperBuilderAssistant -> MappedStatement: build
+            MappedStatement -> MapperBuilderAssistant: 返回MappedStatement
+            note right
+            加到Configuration的mappedStatements容器中
+            end note
+        deactivate XMLStatementBuilder
+    deactivate XMLMapperBuilder
+    XMLMapperBuilder -> XMLMapperBuilder: bindMapperForNamespace
+    end group resource处理
+    note right
+    先判断resource有没有加载
+    end note
+    group 解析待定的ResultMaps、CacheRefs、Statements
+    XMLMapperBuilder -> XMLMapperBuilder: parsePendingResultMaps
+    XMLMapperBuilder -> XMLMapperBuilder: parsePendingCacheRefs
+    XMLMapperBuilder -> XMLMapperBuilder: parsePendingStatements
+    end group
+    note right
+        解析待定ResultMaps
+        解析待定CacheRefs
+        解析待定Statements
+    end note
+    end group parse
 
     deactivate XMLMapperBuilder
 @enduml

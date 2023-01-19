@@ -1,0 +1,17 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+interface SqlSessionFactory
+class DefaultSqlSessionFactory
+class Configuration
+SqlSessionFactory <|-- DefaultSqlSessionFactory
+Configuration -o SqlSessionFactory
+interface SqlSessionFactory {
+SqlSession openSession()
+Configuration getConfiguration()
+}
+
+class Configuration {
+}
+
+@enduml

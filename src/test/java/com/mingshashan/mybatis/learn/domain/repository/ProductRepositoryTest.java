@@ -23,7 +23,8 @@ public class ProductRepositoryTest {
     @Before
     public void before() {
         MybatisConfigUtil mybatisConfigUtil = new MybatisConfigUtil();
-        mybatisConfigUtil.init();
+        String envId = "TEST";
+        mybatisConfigUtil.init(envId);
     }
 
     @After

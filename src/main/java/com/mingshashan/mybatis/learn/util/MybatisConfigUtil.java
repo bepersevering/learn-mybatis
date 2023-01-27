@@ -15,18 +15,6 @@ public class MybatisConfigUtil {
 
     private static SqlSessionFactory sqlSessionFactory;
 
-    static {
-        String mybatisConfigFile = "mybatis-config.xml";
-        // 加载mybatis-config.xml配置文件
-        // 根据其中的配置信息创建SqlSessionFactory对象
-        try (InputStream inputStream = Resources.getResourceAsStream(mybatisConfigFile)) {
-            sqlSessionFactory = new SqlSessionFactoryBuilder()
-                    .build(inputStream);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     /**
      * 获取sqlSessionFactory对象
      *
@@ -41,7 +29,31 @@ public class MybatisConfigUtil {
                 .getMappers();
     }
 
+    public void init(String envId) {
+        initSqlSessionFactory(envId);
+        initMapperDelegate();
+
+    }
+
+    private void initSqlSessionFactory(String envId) {
+        String mybatisConfigFile = "mybatis-config.xml";
+        // 加载mybatis-config.xml配置文件
+        // 根据其中的配置信息创建SqlSessionFactory对象
+        try (InputStream inputStream = Resources.getResourceAsStream(mybatisConfigFile)) {
+            sqlSessionFactory = new SqlSessionFactoryBuilder()
+                    .build(inputStream, envId);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void init() {
+        initSqlSessionFactory();
+        initMapperDelegate();
+
+    }
+
+    private void initMapperDelegate() {
         Collection<Class<?>> mapperClassCollection = MybatisConfigUtil.getSqlSessionFactory()
                 .getConfiguration()
                 .getMapperRegistry().getMappers();
@@ -60,6 +72,18 @@ public class MybatisConfigUtil {
             mapperDelegate.setMapperClass(clazz);
 
             MapperUtil.addMapper(clazz, mapperDelegate);
+        }
+    }
+
+    private void initSqlSessionFactory() {
+        String mybatisConfigFile = "mybatis-config.xml";
+        // 加载mybatis-config.xml配置文件
+        // 根据其中的配置信息创建SqlSessionFactory对象
+        try (InputStream inputStream = Resources.getResourceAsStream(mybatisConfigFile)) {
+            sqlSessionFactory = new SqlSessionFactoryBuilder()
+                    .build(inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

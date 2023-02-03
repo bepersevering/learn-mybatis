@@ -7,26 +7,26 @@
         <id property="id" column="id"></id>
         <result property="name" column="name"></result>
         <result property="price" column="price"></result>
+        <result property="categoryCode" column="category_code"></result>
         <result property="description" column="description"></result>
         <result property="gmtCreated" column="gmt_created"></result>
         <result property="gmtModified" column="gmt_modified"></result>
-
     </resultMap>
 
     <cache-ref namespace="com.mingshashan.mybatis.learn.dao.mapper.CustomerMapper"/>
 
     <sql id="product_column">
-        ID, NAME, PRICE, DESCRIPTION, gmt_created, gmt_modified
+        ID, NAME, PRICE, CATEGORY_CODE, DESCRIPTION, GMT_CREATED, GMT_MODIFIED
     </sql>
 
-    <insert id="saveProduct" parameterType="ProductEntity">
+    <insert id="saveProduct" parameterType="com.mingshashan.mybatis.learn.entity.ProductEntity">
         INSERT T_ARG_PRODUCT (
         <include refid="product_column"></include>
         )
-        values (#{id}, #{name}, #{price}, #{description}, #{gmtCreated}, #{gmtModified})
+        values (#{id}, #{name}, #{price}, #{categoryCode}, #{description}, #{gmtCreated}, #{gmtModified})
     </insert>
 
-    <update id="updateProduct" parameterType="ProductEntity">
+    <update id="updateProduct" parameterType="com.mingshashan.mybatis.learn.entity.ProductEntity">
         INSERT T_ARG_PRODUCT SET
         NAME = #{name},
         PRICE = #{price},
@@ -51,6 +51,24 @@
         <where>
             ID = #{id}
             AND IS_VALID = '1'
+        </where>
+    </select>
+
+    <select id="findByCondition" resultMap="ProductMap">
+        SELECT
+        <include refid="product_column"></include>
+        FROM T_ARG_PRODUCT
+        <where>
+            1 = 1
+            <if test="productEntity.name != null">
+                AND NAME = ${productEntity.name}
+            </if>
+            <if test="productEntity.categoryCode != null">
+                AND CATEGORY_CODE = #{productEntity.categoryCode}
+            </if>
+            AND IS_VALID = '1'
+            LIMIT #{pageSize}
+            OFFSET ${(pageNum-1)*pageSize}
         </where>
     </select>
 </mapper>

@@ -35,8 +35,4 @@ public class Product {
      */
     private String categoryCode;
 
-    /**
-     * 商品类型
-     */
-    private String smallCategoryCode;
 }

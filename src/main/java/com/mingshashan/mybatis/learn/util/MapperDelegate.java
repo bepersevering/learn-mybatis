@@ -15,9 +15,9 @@ public class MapperDelegate<T> {
     private SqlSessionFactory sqlSessionFactory;
 
     public Object getMapper() {
-        return sqlSessionFactory.openSession().getMapper(mapperClass);
-//        return configuration.getMapperRegistry()
-//                .getMapper(mapperClass, sqlSessionFactory.openSession(true));
+//        return sqlSessionFactory.openSession().getMapper(mapperClass);
+        return configuration.getMapperRegistry()
+                .getMapper(mapperClass, sqlSessionFactory.openSession(true));
     }
 
     public Class getMapperClass() {

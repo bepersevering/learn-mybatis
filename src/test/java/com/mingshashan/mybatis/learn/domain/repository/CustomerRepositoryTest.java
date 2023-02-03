@@ -25,13 +25,13 @@ public class CustomerRepositoryTest {
     @Before
     public void before() {
         MybatisConfigUtil mybatisConfigUtil = new MybatisConfigUtil();
-        String envId = "TEST";
+        // String envId = "TEST";
+        String envId = "dev";
         mybatisConfigUtil.init(envId);
     }
 
     @After
     public void after() {
-
     }
 
     // Normal Abnormal

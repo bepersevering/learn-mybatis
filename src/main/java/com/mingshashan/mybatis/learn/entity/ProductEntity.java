@@ -24,4 +24,9 @@ public class ProductEntity extends BaseEntity {
      * 价格
      */
     private BigDecimal price;
+
+    /**
+     * 商品类型代码
+     */
+    private String categoryCode;
 }

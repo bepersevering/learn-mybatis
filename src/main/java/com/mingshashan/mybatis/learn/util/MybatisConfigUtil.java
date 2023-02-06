@@ -3,6 +3,7 @@ package com.mingshashan.mybatis.learn.util;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.apache.ibatis.session.SqlSessionManager;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -68,7 +69,8 @@ public class MybatisConfigUtil {
             MapperDelegate mapperDelegate = new MapperDelegate();
             mapperDelegate.setConfiguration(MybatisConfigUtil.getSqlSessionFactory()
                     .getConfiguration());
-            mapperDelegate.setSqlSessionFactory(sqlSessionFactory);
+//            mapperDelegate.setSqlSessionFactory(sqlSessionFactory);
+            mapperDelegate.setSqlSessionFactory(SqlSessionManager.newInstance(sqlSessionFactory));
             mapperDelegate.setMapperClass(clazz);
 
             MapperUtil.addMapper(clazz, mapperDelegate);

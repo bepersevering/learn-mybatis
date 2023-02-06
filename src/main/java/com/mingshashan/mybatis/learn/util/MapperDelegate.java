@@ -2,6 +2,7 @@ package com.mingshashan.mybatis.learn.util;
 
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionManager;
 
 /**
  * @author mingshashan
@@ -16,8 +17,11 @@ public class MapperDelegate<T> {
 
     public Object getMapper() {
 //        return sqlSessionFactory.openSession().getMapper(mapperClass);
+        SqlSessionManager sqlSessionManager = (SqlSessionManager) sqlSessionFactory;
+
+//        sqlSessionManager.startManagedSession();
         return configuration.getMapperRegistry()
-                .getMapper(mapperClass, sqlSessionFactory.openSession(true));
+                .getMapper(mapperClass, sqlSessionManager);
     }
 
     public Class getMapperClass() {

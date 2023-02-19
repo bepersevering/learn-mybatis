@@ -1,0 +1,113 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class DriverManager {
+}
+
+interface Driver {
+Connection connect()
+boolean acceptsURL()
+DriverPropertyInfo[] getPropertyInfo()
+int getMajorVersion()
+int getMinorVersion()
+boolean jdbcCompliant()
+}
+
+interface Connection {
+Statement createStatement()
+PreparedStatement prepareStatement(String sql)
+CallableStatement prepareCall(String sql)
+String nativeSQL(String sql)
+void setAutoCommit(boolean autoCommit)
+void setAutoCommit(boolean autoCommit)
+boolean getAutoCommit()
+void commit()
+void rollback()
+}
+
+interface Statement extends Wrapper, AutoCloseable {
+    ResultSet executeQuery(String sql)
+    int executeUpdate(String sql)
+    void close()
+    int getMaxFieldSize()
+    void setMaxFieldSize(int max)
+    int getMaxRows()
+    void setMaxRows(int max)
+    void setEscapeProcessing(boolean enable)
+    int getQueryTimeout()
+    void setQueryTimeout(int seconds)
+    void cancel()
+    SQLWarning getWarnings()
+    void clearWarnings()
+    void setCursorName(String name)
+    boolean execute(String sql)
+    ResultSet getResultSet()
+    int getUpdateCount()
+    boolean getMoreResults()
+}
+
+interface PreparedStatement extends Statement {
+addBatch()
+clearParameters()
+execute()
+executeLargeUpdate()
+executeQuery()
+executeUpdate()
+getMetaData()
+getParameterMetaData()
+setArray()
+setAsciiStream()
+setBigDecimal()
+setBinaryStream()
+setBlob()
+setBoolean()
+省略()
+}
+
+interface CallableStatement extends PreparedStatement {
+getArray()
+getBigDecimal()
+getBlob()
+getBoolean()
+getByte()
+getBytes()
+getCharacterStream()
+getClob()
+getDate()
+getDouble()
+getFloat()
+getInt()
+省略()
+}
+
+interface ResultSet extends Wrapper, AutoCloseable {
+getArray()
+getBigDecimal()
+getBlob()
+getBoolean()
+getByte()
+getBytes()
+getCharacterStream()
+getClob()
+getCursorName()
+getDate()
+getDouble()
+getFloat()
+getInt()
+getLong()
+getStatement()
+getString()
+getTime()
+getTimestamp()
+last()
+next()
+previous()
+省略()
+}
+Driver <|-- Connection
+
+DriverManager *-- Driver
+
+Connection -- Statement
+
+@enduml

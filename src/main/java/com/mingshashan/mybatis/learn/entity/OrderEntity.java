@@ -1,13 +1,15 @@
 package com.mingshashan.mybatis.learn.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 /**
  * 订单entity
  */
-@Data
+@Getter
+@Setter
 public class OrderEntity extends BaseEntity {
 
     /**

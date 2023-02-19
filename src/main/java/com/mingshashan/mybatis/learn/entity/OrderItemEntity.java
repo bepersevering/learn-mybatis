@@ -1,13 +1,15 @@
 package com.mingshashan.mybatis.learn.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 
 /**
  * 订单条目entity
  */
-@Data
+@Setter
+@Getter
 public class OrderItemEntity extends BaseEntity {
 
     /**

@@ -16,6 +16,7 @@ public class ProductConverter {
         productEntity.setId(product.getId());
         productEntity.setName(product.getName());
         productEntity.setPrice(product.getPrice());
+        productEntity.setCategoryCode(product.getCategoryCode());
         productEntity.setDescription(product.getDescription());
         return productEntity;
     }
@@ -28,6 +29,7 @@ public class ProductConverter {
         product.setId(productEntity.getId());
         product.setName(productEntity.getName());
         product.setPrice(productEntity.getPrice());
+        product.setCategoryCode(productEntity.getCategoryCode());
         product.setDescription(productEntity.getDescription());
         return product;
     }

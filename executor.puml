@@ -1,0 +1,20 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+interface Executor
+abstract class BaseExecutor
+class CachingExecutor {}
+class SimpleExecutor {}
+class BatchExecutor {}
+class ReuseExecutor {}
+class ClosedExecutor {}
+
+Executor <|.. BaseExecutor
+Executor <|.. CachingExecutor
+BaseExecutor <|-- SimpleExecutor
+BaseExecutor <|-- BatchExecutor
+BaseExecutor <|-- ReuseExecutor
+BaseExecutor <|-- ClosedExecutor
+
+
+@enduml

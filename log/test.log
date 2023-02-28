@@ -1,0 +1,8 @@
+17:26:12.504 [main] INFO  com.mingshashan.mybatis.learn.LearnMybatisApplication - Starting LearnMybatisApplication using Java 11.0.10 on DESKTOP-JCLSCOJ with PID 16668 (F:\02.learn\02.code\02.java\learn-mybatis\target\classes started by XFJ in F:\02.learn\02.code\02.java\learn-mybatis)
+17:26:12.550 [main] INFO  com.mingshashan.mybatis.learn.LearnMybatisApplication - No active profile set, falling back to default profiles: default
+17:26:15.167 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-9101"]
+17:26:15.168 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+17:26:15.169 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.56]
+17:26:15.307 [main] INFO  org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+17:26:32.904 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-9101"]
+17:26:32.973 [main] INFO  com.mingshashan.mybatis.learn.LearnMybatisApplication - Started LearnMybatisApplication in 21.624 seconds (JVM running for 25.938)

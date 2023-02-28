@@ -1,10 +1,12 @@
 package com.mingshashan.mybatis.learn.dao.mapper;
 
 import com.mingshashan.mybatis.learn.entity.ProductEntity;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+@Mapper
 public interface ProductMapper {
 
     /**
@@ -37,12 +39,13 @@ public interface ProductMapper {
 
     /**
      * 根据分页查询条件分页查询
+     *
      * @param productEntity
      * @param pageNum
      * @param pageSize
      * @return
      */
     List<ProductEntity> findByCondition(@Param("productEntity") ProductEntity productEntity,
-                                           @Param("pageNum") Integer pageNum,
-                                           @Param("pageSize") Integer pageSize);
+                                        @Param("pageNum") Integer pageNum,
+                                        @Param("pageSize") Integer pageSize);
 }

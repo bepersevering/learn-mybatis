@@ -41,10 +41,6 @@
         <result property="gmtCreated" column="gmt_created"></result>
         <result property="gmtModified" column="gmt_modified"></result>
         <result property="isValid" column="is_valid"></result>
-        <collection property="tagEntityList" ofType="TagEntity">
-            <id property="id" column="id"/>
-            <result property="name" column="name"/>
-        </collection>
     </resultMap>
 
 
@@ -52,14 +48,14 @@
         id, name, gender, phone, address_info, gmt_created, gmt_modified
     </sql>
 
-    <insert id="saveCustomer" parameterType="CustomerEntity">
+    <insert id="saveCustomer" parameterType="com.mingshashan.mybatis.learn.entity.CustomerEntity">
         INSERT INTO T_ARG_CUSTOMER(
         <include refid="customer_column"></include>
         )
         values(#{id}, #{name}, #{gender}, #{phone}, #{addressList}, #{gmtCreated}, #{gmtModified})
     </insert>
 
-    <update id="updateCustomer" parameterType="CustomerEntity">
+    <update id="updateCustomer" parameterType="com.mingshashan.mybatis.learn.entity.CustomerEntity">
         update T_ARG_CUSTOMER set
         name = #{name},
         gender = #{gender},
@@ -78,7 +74,7 @@
         </where>
     </update>
 
-    <select id="findById" resultType="CustomerEntity">
+    <select id="findById" resultMap="CustomerMap">
         select
         <include refid="customer_column"></include>
         from T_ARG_CUSTOMER
